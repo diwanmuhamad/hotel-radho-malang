@@ -32,7 +32,7 @@ export default function RoomsSection() {
     <section id="rooms" className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <motion.h2
-          className="text-4xl md:text-5xl font-light text-center mb-16"
+          className="text-4xl md:text-5xl text-[#5D5D5D] text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

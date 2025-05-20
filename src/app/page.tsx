@@ -83,33 +83,10 @@ export default function Home() {
             className="absolute top-0 left-0 right-0 p-8 flex justify-between items-center"
             style={{ opacity }}
           >
-            <div className="text-white text-2xl nav-item">Hotel Radho</div>
-            <div className="flex gap-8 text-white">
-              <a
-                href="#rooms"
-                className="nav-item hover:opacity-80 transition-opacity"
-              >
-                Rooms
-              </a>
-              <a
-                href="#dining"
-                className="nav-item hover:opacity-80 transition-opacity"
-              >
-                Dining
-              </a>
-              <a
-                href="#spa"
-                className="nav-item hover:opacity-80 transition-opacity"
-              >
-                Spa
-              </a>
-              <a
-                href="#contact"
-                className="nav-item hover:opacity-80 transition-opacity"
-              >
-                Contact
-              </a>
-            </div>
+            <a className="text-white nav-item hover:opacity-80">About Us</a>
+            <a href="#rooms" className="nav-item hover:opacity-80">
+              Rooms
+            </a>
           </motion.nav>
 
           {/* Scroll Indicator */}
@@ -141,10 +118,10 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
               >
-                <h2 className="text-4xl md:text-5xl font-light mb-6">
+                <h2 className="text-4xl md:text-5xl font-light mb-6 text-[#5D5D5D]">
                   Welcome to Luxury
                 </h2>
-                <p className="text-gray-600 mb-8">
+                <p className="text-[#666666] mb-8">
                   Experience unparalleled luxury at Hotel Radho, where every
                   detail is crafted to perfection. Our historic building has
                   been transformed into a modern sanctuary of comfort and
@@ -169,65 +146,6 @@ export default function Home() {
 
         {/* Rooms Section */}
         <RoomsSection />
-
-        {/* Dining Section */}
-        <section id="dining" className="py-20 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center"
-            >
-              <h2 className="text-4xl md:text-5xl font-light mb-8">
-                Fine Dining
-              </h2>
-              <p className="text-gray-600 max-w-2xl mx-auto mb-12">
-                Indulge in culinary excellence at our award-winning restaurants,
-                where our master chefs create unforgettable dining experiences.
-              </p>
-              <button className="px-8 py-3 text-sm font-light tracking-wider border border-black text-black hover:bg-black hover:text-white transition-all duration-300">
-                View Menus
-              </button>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Contact Section */}
-        <section id="contact" className="py-20 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-2xl mx-auto text-center">
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-4xl md:text-5xl font-light mb-8"
-              >
-                Contact Us
-              </motion.h2>
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="text-gray-600 mb-8"
-              >
-                Ready to experience luxury? Get in touch with us to plan your
-                perfect stay.
-              </motion.p>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4 }}
-              >
-                <button className="px-8 py-3 text-sm font-light tracking-wider border border-black text-black hover:bg-black hover:text-white transition-all duration-300">
-                  Contact Us
-                </button>
-              </motion.div>
-            </div>
-          </div>
-        </section>
       </div>
       <Footer />
     </>
