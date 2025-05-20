@@ -1,103 +1,235 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import RoomsSection from "@/components/RoomsSection";
+import Footer from "@/components/Footer";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll();
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Hero text animation
+      gsap.from(".hero-text", {
+        y: 100,
+        opacity: 0,
+        duration: 1.5,
+        ease: "power4.out",
+        stagger: 0.2,
+      });
+
+      // Navigation animation
+      gsap.from(".nav-item", {
+        y: -20,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power2.out",
+      });
+    }, heroRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <>
+      <div className="relative">
+        {/* Hero Section */}
+        <div
+          ref={heroRef}
+          className="h-screen relative bg-[url('/hero-bg.jpg')] bg-cover bg-center"
+        >
+          <div className="absolute inset-0 bg-black/30" />
+
+          <div className="relative h-full flex items-center justify-center">
+            <div className="text-center text-white">
+              <motion.h1
+                className="hero-text text-6xl md:text-8xl font-light mb-4"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.5 }}
+              >
+                Hotel Radho
+              </motion.h1>
+              <motion.p
+                className="hero-text text-xl md:text-2xl font-light mb-8"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.7 }}
+              >
+                Experience Luxury
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1 }}
+              >
+                <button className="px-8 py-3 text-sm font-light tracking-wider border border-white text-white hover:bg-white hover:text-black transition-all duration-300">
+                  Book Your Stay
+                </button>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Navigation */}
+          <motion.nav
+            className="absolute top-0 left-0 right-0 p-8 flex justify-between items-center"
+            style={{ opacity }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <div className="text-white text-2xl nav-item">Hotel Radho</div>
+            <div className="flex gap-8 text-white">
+              <a
+                href="#rooms"
+                className="nav-item hover:opacity-80 transition-opacity"
+              >
+                Rooms
+              </a>
+              <a
+                href="#dining"
+                className="nav-item hover:opacity-80 transition-opacity"
+              >
+                Dining
+              </a>
+              <a
+                href="#spa"
+                className="nav-item hover:opacity-80 transition-opacity"
+              >
+                Spa
+              </a>
+              <a
+                href="#contact"
+                className="nav-item hover:opacity-80 transition-opacity"
+              >
+                Contact
+              </a>
+            </div>
+          </motion.nav>
+
+          {/* Scroll Indicator */}
+          <motion.div
+            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5, duration: 1 }}
           >
-            Read our docs
-          </a>
+            <div className="flex flex-col items-center">
+              <span className="text-sm mb-2">Scroll to explore</span>
+              <motion.div
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                ↓
+              </motion.div>
+            </div>
+          </motion.div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        {/* About Section */}
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+              >
+                <h2 className="text-4xl md:text-5xl font-light mb-6">
+                  Welcome to Luxury
+                </h2>
+                <p className="text-gray-600 mb-8">
+                  Experience unparalleled luxury at Hotel Radho, where every
+                  detail is crafted to perfection. Our historic building has
+                  been transformed into a modern sanctuary of comfort and
+                  elegance.
+                </p>
+                <button className="px-8 py-3 text-sm font-light tracking-wider border border-black text-black hover:bg-black hover:text-white transition-all duration-300">
+                  Discover More
+                </button>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="relative h-[400px]"
+              >
+                <div className="absolute inset-0 bg-[url('/about-image.jpg')] bg-cover bg-center" />
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Rooms Section */}
+        <RoomsSection />
+
+        {/* Dining Section */}
+        <section id="dining" className="py-20 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <h2 className="text-4xl md:text-5xl font-light mb-8">
+                Fine Dining
+              </h2>
+              <p className="text-gray-600 max-w-2xl mx-auto mb-12">
+                Indulge in culinary excellence at our award-winning restaurants,
+                where our master chefs create unforgettable dining experiences.
+              </p>
+              <button className="px-8 py-3 text-sm font-light tracking-wider border border-black text-black hover:bg-black hover:text-white transition-all duration-300">
+                View Menus
+              </button>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Contact Section */}
+        <section id="contact" className="py-20 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-2xl mx-auto text-center">
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-4xl md:text-5xl font-light mb-8"
+              >
+                Contact Us
+              </motion.h2>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="text-gray-600 mb-8"
+              >
+                Ready to experience luxury? Get in touch with us to plan your
+                perfect stay.
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+              >
+                <button className="px-8 py-3 text-sm font-light tracking-wider border border-black text-black hover:bg-black hover:text-white transition-all duration-300">
+                  Contact Us
+                </button>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <Footer />
+    </>
   );
 }
