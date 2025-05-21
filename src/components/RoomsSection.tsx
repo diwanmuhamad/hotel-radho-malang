@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 const rooms = [
   {
@@ -66,9 +67,12 @@ export default function RoomsSection() {
                   {room.description}
                 </p>
                 <p className="text-sm mb-4">{room.price}</p>
-                <button className="px-8 py-3 text-sm font-light tracking-wider border border-white text-white hover:bg-white hover:text-black transition-all duration-300">
-                  Book Now
-                </button>
+                <Link
+                  href={`/rooms/${room.id}`}
+                  className="px-8 py-3 text-sm font-light tracking-wider border border-white text-white hover:bg-white hover:text-black transition-all duration-300 inline-block text-center"
+                >
+                  Explore
+                </Link>
               </div>
             </motion.div>
           ))}
