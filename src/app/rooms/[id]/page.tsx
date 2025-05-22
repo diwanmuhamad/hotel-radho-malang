@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Footer from "@/components/Footer";
 
 const rooms = [
   {
@@ -105,7 +106,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
             href="/#rooms"
             className="inline-block px-6 py-2 border border-black text-black hover:bg-black hover:text-white transition-all duration-300 rounded"
           >
-            Back to Rooms
+            Book Now
           </Link>
         </div>
         {/* Right: Features */}
@@ -120,6 +121,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
           </ul>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
